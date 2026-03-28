@@ -1,18 +1,18 @@
 /* ===== VARIABLES ===== */
 :root {
-  --bg: #0A0E17;
-  --bg-card: #111827;
-  --gold: #C9A84C;
-  --gold-light: #E8C96A;
-  --slate: #8A9BB0;
-  --white: #F5F7FA;
+  --bg: #0D0D0D;
+  --bg-card: #1A1A1A;
+  --gold: #CC1A1A;
+  --gold-light: #E52222;
+  --slate: #9A9A9A;
+  --white: #F5F5F5;
   --font-serif: 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'Inter', system-ui, sans-serif;
   --section-pad: clamp(4rem, 8vw, 8rem);
   --max-width: 1200px;
-  --gold-rgb: 201, 168, 76;
-  --bg-rgb: 10, 14, 23;
-  --bg-card-hover: #151e2e;
+  --gold-rgb: 204, 26, 26;
+  --bg-rgb: 13, 13, 13;
+  --bg-card-hover: #222222;
 }
 
 /* ===== RESET ===== */
@@ -388,7 +388,7 @@ button { cursor: pointer; font: inherit; background: none; border: none; }
 /* ===== CTA ===== */
 #cta {
   padding: var(--section-pad) 0;
-  background: linear-gradient(180deg, var(--bg) 0%, #0D1520 100%);
+  background: linear-gradient(180deg, var(--bg) 0%, #111111 100%);
   position: relative;
 }
 #cta::before {
