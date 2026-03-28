@@ -16,6 +16,14 @@ if (hamburger && mobileMenu) {
   });
 }
 
+// Close mobile menu when nav links are clicked
+document.querySelectorAll('.mobile-menu a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (mobileMenu) mobileMenu.classList.remove('open');
+    if (hamburger) hamburger.classList.remove('open');
+  });
+});
+
 // Init Lucide icons
 if (typeof lucide !== 'undefined') {
   lucide.createIcons();
