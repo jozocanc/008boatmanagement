@@ -96,14 +96,8 @@ button { cursor: pointer; font: inherit; background: none; border: none; }
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
 }
-.nav-logo {
-  font-family: var(--font-serif);
-  font-size: 1.3rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  color: var(--white);
-}
-.nav-logo span { color: var(--gold); }
+.nav-logo { display: flex; align-items: center; }
+.nav-logo-img { height: 36px; width: auto; display: block; }
 .nav-cta { padding: 0.6rem 1.5rem; font-size: 0.78rem; }
 .hamburger {
   display: none;
@@ -271,19 +265,30 @@ button { cursor: pointer; font: inherit; background: none; border: none; }
 }
 .service-card {
   background: var(--bg-card);
-  padding: 2rem 1.5rem;
   transition: background 0.2s;
+  display: flex;
+  flex-direction: column;
 }
 .service-card:hover { background: var(--bg-card-hover); }
+.service-photo {
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--bg);
+}
+.service-card-body {
+  padding: 1.5rem;
+  flex: 1;
+}
 .service-icon {
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   color: var(--gold);
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 .service-card h3 {
   font-family: var(--font-serif);
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 500;
   margin-bottom: 0.5rem;
   color: var(--white);
@@ -425,13 +430,29 @@ button { cursor: pointer; font: inherit; background: none; border: none; }
 /* ===== FOOTER ===== */
 footer {
   border-top: 1px solid rgba(var(--gold-rgb), 0.1);
-  padding: 2rem 0;
+  padding: 3rem 0 2rem;
 }
-.footer-inner {
+.footer-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+  margin-bottom: 0;
+}
+.footer-logo { height: 48px; width: auto; opacity: 0.9; }
+.footer-contact, .footer-socials {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 0.5rem;
 }
-@media (max-width: 480px) {
-  .footer-inner { flex-direction: column; gap: 0.75rem; text-align: center; }
+.footer-link {
+  font-size: 0.85rem;
+  color: var(--slate);
+  transition: color 0.2s;
+}
+.footer-link:hover { color: var(--gold); }
+.footer-copy { color: var(--slate); font-size: 0.8rem; text-align: center; }
+@media (max-width: 640px) {
+  .footer-top { grid-template-columns: 1fr; }
+  .footer-copy { text-align: left; }
 }
