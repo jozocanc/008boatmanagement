@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get Started — 008 Boat Management</title>
+  <link rel="shortcut icon" href="https://cdn.prod.website-files.com/6924382c8e08fc47868a5664/692e9da230d185a501692ffb_2025_088_FAVICON%2032X32.png" type="image/x-icon" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* ===== START PAGE ===== */
+    .start-page {
+      min-height: 100vh;
+      background: var(--bg);
+      display: flex;
+      flex-direction: column;
+    }
+    .start-header {
+      padding: 6rem 0 3rem;
+      text-align: center;
+    }
+    .start-header .section-label { display: block; margin-bottom: 0.75rem; }
+    .start-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 400;
+      color: var(--white);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+    .start-sub {
+      color: var(--slate);
+      font-size: 1rem;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.7;
+    }
+
+    /* Progress bar */
+    .progress-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-top: 2.5rem;
+    }
+    .progress-step {
+      width: 32px;
+      height: 3px;
+      background: rgba(var(--gold-rgb), 0.2);
+      transition: background 0.3s;
+    }
+    .progress-step.active { background: var(--gold); }
+
+    /* Form wrapper */
+    .start-form-wrap {
+      flex: 1;
+      padding: 1rem 0 5rem;
+    }
+    .form-step {
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+    .form-step.visible { display: block; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Step 1 — service selection */
+    .step-heading {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 0.4rem;
+    }
+    .step-sub {
+      color: var(--slate);
+      font-size: 0.9rem;
+      margin-bottom: 2rem;
+    }
+    .services-select-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(var(--gold-rgb), 0.1);
+      border: 1px solid rgba(var(--gold-rgb), 0.1);
+      margin-bottom: 2.5rem;
+    }
+    .service-option {
+      position: relative;
+      cursor: pointer;
+    }
+    .service-option input[type="checkbox"] {
+      position: absolute;
+      opacity: 0;
+      width: 0; height: 0;
+    }
+    .service-option-label {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.6rem;
+      padding: 1.5rem;
+      background: var(--bg-card);
+      transition: background 0.2s;
+      cursor: pointer;
+      height: 100%;
+      border-bottom: 2px solid transparent;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .service-option input:checked + .service-option-label {
+      background: var(--bg-card-hover);
+      border-bottom-color: var(--gold);
+    }
+    .service-option-label:hover { background: var(--bg-card-hover); }
+    .service-option-label i {
+      width: 20px; height: 20px;
+      color: var(--gold);
+    }
+    .service-option-label span {
+      font-family: var(--font-serif);
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--white);
+      line-height: 1.3;
+    }
+    .service-check {
+      position: absolute;
+      top: 0.75rem; right: 0.75rem;
+      width: 18px; height: 18px;
+      border: 1.5px solid rgba(var(--gold-rgb), 0.3);
+      border-radius: 2px;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, border-color 0.2s;
+      background: transparent;
+    }
+    .service-option input:checked ~ .service-check {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+    .service-check::after {
+      content: '';
+      width: 4px; height: 7px;
+      border: 2px solid transparent;
+      border-right-color: white;
+      border-bottom-color: white;
+      transform: rotate(45deg) translate(-1px, -1px);
+      display: none;
+    }
+    .service-option input:checked ~ .service-check::after { display: block; }
+
+    @media (max-width: 1024px) { .services-select-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 480px)  { .services-select-grid { grid-template-columns: 1fr; } }
+
+    /* Step 2 — contact info */
+    .form-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-bottom: 2.5rem;
+    }
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--slate);
+    }
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      background: var(--bg-card);
+      border: 1px solid rgba(var(--gold-rgb), 0.15);
+      color: var(--white);
+      font-family: var(--font-sans);
+      font-size: 0.95rem;
+      padding: 0.85rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      width: 100%;
+    }
+    .form-field input::placeholder,
+    .form-field textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus { border-color: var(--gold); }
+    .form-field select { cursor: pointer; appearance: none; }
+    .form-field select option { background: var(--bg-card); }
+    .form-field textarea { resize: vertical; min-height: 100px; }
+
+    @media (max-width: 640px) {
+      .form-fields { grid-template-columns: 1fr; }
+      .form-field.full { grid-column: 1; }
+    }
+
+    /* Navigation buttons */
+    .form-nav {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .btn-back {
+      background: none;
+      border: 1px solid rgba(var(--gold-rgb), 0.3);
+      color: var(--slate);
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.85rem 1.75rem;
+      cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-back:hover { border-color: var(--gold); color: var(--white); }
+    .error-msg {
+      font-size: 0.82rem;
+      color: var(--gold);
+      margin-top: -1rem;
+      margin-bottom: 1rem;
+      display: none;
+    }
+    .error-msg.visible { display: block; }
+
+    /* Step 3 — success */
+    .success-wrap {
+      text-align: center;
+      padding: 4rem 1rem;
+    }
+    .success-icon {
+      width: 56px; height: 56px;
+      color: var(--gold);
+      margin: 0 auto 1.5rem;
+    }
+    .success-title {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .success-sub {
+      color: var(--slate);
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+  </style>
+</head>
+<body class="start-page">
+
+  <nav id="navbar" class="scrolled">
+    <div class="container nav-inner">
+      <a href="index.html" class="nav-logo">
+        <img src="https://cdn.prod.website-files.com/6924382c8e08fc47868a5664/692438b390f0cfb249477f5a_2025_088_FULL%20LOGO%20W-%20EDGE.png" alt="008 Boat Management" class="nav-logo-img" />
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+      <a href="index.html" class="btn nav-cta">← Back to Site</a>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="index.html" class="btn">← Back to Site</a>
+    </div>
+  </nav>
+
+  <div class="start-header container">
+    <span class="section-label">Get Started</span>
+    <h1 class="start-title">Tell us about your boat.</h1>
+    <p class="start-sub">Select the services you need and share a few details. Kai will follow up with a custom plan within 24 hours.</p>
+    <div class="progress-bar">
+      <div class="progress-step active" id="prog-1"></div>
+      <div class="progress-step" id="prog-2"></div>
+    </div>
+  </div>
+
+  <div class="start-form-wrap">
+    <div class="container">
+
+      <!-- STEP 1: Service Selection -->
+      <form id="intake-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+
+        <div class="form-step visible" id="step-1">
+          <h2 class="step-heading">What do you need?</h2>
+          <p class="step-sub">Select all that apply — you can always add more later.</p>
+          <p class="error-msg" id="step1-error">Please select at least one service.</p>
+
+          <div class="services-select-grid">
+
+            <label class="service-option">
+              <input type="checkbox" name="services[]" value="Detailing & Protection" />
+              <div class="service-option-label">
+                <i data-lucide="sparkles"></i>
+                <span>Detailing & Protection</span>
+              </div>
+              <div class="service-check"></div>
+            </label>
+
+            <label class="service-option">
+              <input type="checkbox" name="services[]" value="Routine Maintenance" />
+              <div class="service-option-label">
+                <i data-lucide="settings"></i>
+                <span>Routine Maintenance</span>
+              </div>
+              <div class="service-check"></div>
+            </label>
+
+            <label class="service-option">
+              <input type="checkbox" name="services[]" value="Full Vessel Management" />
+              <div class="service-option-label">
+                <i data-lucide="anchor"></i>
+                <span>Full Vessel Management</span>
+              </div>
+              <div class="service-check"></div>
+            </label>
+
+            <label class="service-option">
+              <input type="checkbox" name="services[]" value="Captain & Crew" />
+              <div class="service-option-label">
+                <i data-lucide="users"></i>
+                <span>Captain & Crew</span>
+              </div>
+              <div class="service-check"></div>
+            </label>
+
+            <label class="service-option">
+              <input type="checkbox" name="services[]" value="Provisioning" />
+              <div class="service-option-label">
+                <i data-lucide="package"></i>
+                <span>Provisioning</span>
+              </div>
+              <div class="service-check"></div>
+            </label>
+
+            <label class="service-option">
+              <input type="checkbox" name="services[]" value="Marine Transport" />
+              <div class="service-option-label">
+                <i data-lucide="truck"></i>
+                <span>Marine Transport</span>
+              </div>
+              <div class="service-check"></div>
+            </label>
+
+            <label class="service-option">
+              <input type="checkbox" name="services[]" value="Project Management" />
+              <div class="service-option-label">
+                <i data-lucide="clipboard-list"></i>
+                <span>Project Management</span>
+              </div>
+              <div class="service-check"></div>
+            </label>
+
+            <label class="service-option">
+              <input type="checkbox" name="services[]" value="Trip Planning" />
+              <div class="service-option-label">
+                <i data-lucide="map"></i>
+                <span>Trip Planning</span>
+              </div>
+              <div class="service-check"></div>
+            </label>
+
+          </div>
+
+          <div class="form-nav">
+            <button type="button" class="btn" onclick="nextStep()">Continue →</button>
+          </div>
+        </div>
+
+        <!-- STEP 2: Contact Info -->
+        <div class="form-step" id="step-2">
+          <h2 class="step-heading">Your details.</h2>
+          <p class="step-sub">So Kai can reach you with a custom proposal.</p>
+
+          <div class="form-fields">
+            <div class="form-field">
+              <label for="first-name">First Name *</label>
+              <input type="text" id="first-name" name="first_name" placeholder="John" required />
+            </div>
+            <div class="form-field">
+              <label for="last-name">Last Name *</label>
+              <input type="text" id="last-name" name="last_name" placeholder="Smith" required />
+            </div>
+            <div class="form-field">
+              <label for="email">Email *</label>
+              <input type="email" id="email" name="email" placeholder="john@example.com" required />
+            </div>
+            <div class="form-field">
+              <label for="phone">Phone</label>
+              <input type="tel" id="phone" name="phone" placeholder="+1 (954) 000-0000" />
+            </div>
+            <div class="form-field">
+              <label for="boat-type">Boat Type</label>
+              <select id="boat-type" name="boat_type">
+                <option value="" disabled selected>Select type</option>
+                <option>Center Console</option>
+                <option>Sportfish</option>
+                <option>Motor Yacht</option>
+                <option>Sailboat</option>
+                <option>Catamaran</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="boat-size">Boat Length (ft)</label>
+              <input type="text" id="boat-size" name="boat_size" placeholder="e.g. 42" />
+            </div>
+            <div class="form-field full">
+              <label for="notes">Anything else Kai should know?</label>
+              <textarea id="notes" name="notes" placeholder="Location, current condition, timing, specific needs..."></textarea>
+            </div>
+          </div>
+
+          <div class="form-nav">
+            <button type="button" class="btn-back" onclick="prevStep()">← Back</button>
+            <button type="submit" class="btn">Submit Request</button>
+          </div>
+        </div>
+
+      </form>
+
+      <!-- STEP 3: Success -->
+      <div class="form-step" id="step-3">
+        <div class="success-wrap">
+          <i data-lucide="check-circle" class="success-icon"></i>
+          <h2 class="success-title">Request received.</h2>
+          <p class="success-sub">Kai will review your request and get back to you within 24 hours with a custom plan tailored to your vessel.</p>
+          <a href="index.html" class="btn">← Back to Homepage</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    function nextStep() {
+      const checked = document.querySelectorAll('input[name="services[]"]:checked');
+      const error = document.getElementById('step1-error');
+      if (checked.length === 0) {
+        error.classList.add('visible');
+        return;
+      }
+      error.classList.remove('visible');
+      document.getElementById('step-1').classList.remove('visible');
+      document.getElementById('step-2').classList.add('visible');
+      document.getElementById('prog-2').classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function prevStep() {
+      document.getElementById('step-2').classList.remove('visible');
+      document.getElementById('step-1').classList.add('visible');
+      document.getElementById('prog-2').classList.remove('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Handle form submission via Formspree
+    document.getElementById('intake-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          document.getElementById('step-2').classList.remove('visible');
+          document.getElementById('step-3').classList.add('visible');
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else {
+          alert('Something went wrong. Please email kai@008boatmanagement.com directly.');
+        }
+      } catch {
+        alert('Something went wrong. Please email kai@008boatmanagement.com directly.');
+      }
+    });
+  </script>
+</body>
+</html>
