@@ -176,3 +176,37 @@ button { cursor: pointer; font: inherit; background: none; border: none; }
   margin-bottom: 2.5rem;
   line-height: 1.7;
 }
+
+/* ===== PROBLEM ===== */
+#problem { padding: var(--section-pad) 0; }
+.problem-inner { display: grid; gap: 3rem; }
+.problem-text { text-align: center; }
+.problem-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.problem-card {
+  background: var(--bg-card);
+  border: 1px solid rgba(var(--gold-rgb), 0.1);
+  padding: 2rem;
+  transition: border-color 0.2s;
+}
+.problem-card:hover { border-color: rgba(var(--gold-rgb), 0.35); }
+.problem-icon {
+  width: 28px;
+  height: 28px;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+.problem-card h3 {
+  font-family: var(--font-serif);
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: var(--white);
+}
+.problem-card p { color: var(--slate); font-size: 0.95rem; line-height: 1.7; }
+@media (max-width: 768px) {
+  .problem-cards { grid-template-columns: 1fr; }
+}
