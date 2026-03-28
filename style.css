@@ -210,3 +210,47 @@ button { cursor: pointer; font: inherit; background: none; border: none; }
 @media (max-width: 768px) {
   .problem-cards { grid-template-columns: 1fr; }
 }
+
+/* ===== HOW IT WORKS ===== */
+#how-it-works { padding: var(--section-pad) 0; }
+.hiw-inner { display: flex; flex-direction: column; gap: 3.5rem; }
+.text-center { text-align: center; }
+.hiw-steps {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto 1fr;
+  align-items: start;
+  gap: 1.5rem;
+}
+.hiw-step { text-align: center; padding: 2rem 1rem; }
+.hiw-num {
+  font-family: var(--font-serif);
+  font-size: 4rem;
+  font-weight: 300;
+  color: rgba(var(--gold-rgb), 0.2);
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+.hiw-step h3 {
+  font-family: var(--font-serif);
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+  color: var(--white);
+}
+.hiw-step p { color: var(--slate); font-size: 0.95rem; line-height: 1.7; }
+.hiw-connector {
+  width: 1px;
+  height: 60px;
+  background: rgba(var(--gold-rgb), 0.2);
+  margin-top: 3.5rem;
+  align-self: flex-start;
+}
+@media (max-width: 768px) {
+  .hiw-steps {
+    grid-template-columns: 1fr;
+  }
+  .hiw-connector {
+    width: 60px; height: 1px;
+    margin: 0 auto;
+  }
+}
