@@ -131,7 +131,32 @@ button { cursor: pointer; font: inherit; background: none; border: none; }
 }
 .nav-logo { display: flex; align-items: center; }
 .nav-logo-img { height: 36px; width: auto; display: block; }
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+.nav-link {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--white);
+  transition: color 0.2s;
+}
+.nav-link:hover { color: var(--gold); }
+.mobile-nav-link {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--white);
+  padding: 0.5rem 0;
+  transition: color 0.2s;
+}
+.mobile-nav-link:hover { color: var(--gold); }
 .nav-cta { padding: 0.6rem 1.5rem; font-size: 0.78rem; }
+@media (max-width: 900px) { .nav-links { display: none; } }
 .hamburger {
   display: none;
   flex-direction: column;
