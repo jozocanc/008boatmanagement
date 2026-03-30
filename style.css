@@ -428,9 +428,10 @@ button { cursor: pointer; font: inherit; background: none; border: none; }
   content: '';
   position: absolute;
   top: 0; left: 50%; transform: translateX(-50%);
-  width: 1px; height: 80px;
+  width: 1px; height: 60px;
   background: linear-gradient(to bottom, transparent, var(--gold));
 }
+.cta-inner { padding-top: 2rem; }
 .cta-inner { text-align: center; }
 .cta-title {
   font-family: var(--font-serif);
